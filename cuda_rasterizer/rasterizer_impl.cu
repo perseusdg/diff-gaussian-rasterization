@@ -145,6 +145,8 @@ void CudaRasterizer::Rasterizer::markVisible(
 	float* projmatrix,
 	bool* present)
 {
+
+	printf("Frustum testing - Training pipeline\n");
 	checkFrustum << <(P + 255) / 256, 256 >> > (
 		P,
 		means3D,
@@ -219,6 +221,8 @@ int CudaRasterizer::Rasterizer::forward(
 	int* radii,
 	bool debug)
 {
+
+	printf("Started forward rasterization pass - Training pipeline\n");
 	const float focal_y = height / (2.0f * tan_fovy);
 	const float focal_x = width / (2.0f * tan_fovx);
 
@@ -368,6 +372,8 @@ void CudaRasterizer::Rasterizer::backward(
 	float* dL_drot,
 	bool debug)
 {
+
+	printf("Started backward raterization pass - Training pipeline\n");
 	GeometryState geomState = GeometryState::fromChunk(geom_buffer, P);
 	BinningState binningState = BinningState::fromChunk(binning_buffer, R);
 	ImageState imgState = ImageState::fromChunk(img_buffer, width * height);
